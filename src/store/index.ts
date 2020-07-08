@@ -17,6 +17,8 @@ const persistMigrate = {
       settings: {
         ...state.settings,
         desktop_notifications: true,
+        pushover_user: null,
+        pushover_app: null,
       },
     };
   },

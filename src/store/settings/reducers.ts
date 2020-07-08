@@ -7,6 +7,8 @@ import {
   SETTING_ALERT_VOLUME,
   SETTING_CHECK_INTERVAL,
   SETTING_DESKTOP_NOTIFICATIONS,
+  SETTING_PUSHOVER_USER,
+  SETTING_PUSHOVER_APP,
 } from './types';
 
 const initialState: SettingsState = {
@@ -14,6 +16,8 @@ const initialState: SettingsState = {
   alert_volume: 100,
   check_interval: 60,
   desktop_notifications: true,
+  pushover_user: null,
+  pushover_app: null,
 };
 
 export function settingsReducer(state = initialState, action: SettingsActionTypes) {
@@ -30,6 +34,12 @@ export function settingsReducer(state = initialState, action: SettingsActionType
         break;
       case SETTING_DESKTOP_NOTIFICATIONS:
         draftState.desktop_notifications = action.payload;
+        break;
+      case SETTING_PUSHOVER_USER:
+        draftState.pushover_user = action.payload;
+        break;
+      case SETTING_PUSHOVER_APP:
+        draftState.pushover_app = action.payload;
         break;
     }
   });

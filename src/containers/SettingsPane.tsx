@@ -9,6 +9,8 @@ import {
   settingAlertVolume,
   settingCheckInterval,
   settingDesktopNotifications,
+  settingPushoverUser,
+  settingPushoverApp,
 } from '../store/settings/actions';
 
 export function SettingsPane() {
@@ -39,6 +41,14 @@ export function SettingsPane() {
     dispatch(settingDesktopNotifications(event.target.checked));
   }
 
+  function onChangePushoverUser(event: any) {
+    dispatch(settingPushoverUser(event.target.value));
+  }
+
+  function onChangePushoverApp(event: any) {
+    dispatch(settingPushoverApp(event.target.value));
+  }
+
   return (
     <Tab.Pane className="p-1" eventKey="settings">
       <Form.Group>
@@ -67,6 +77,22 @@ export function SettingsPane() {
           type="checkbox"
           checked={settings.desktop_notifications}
           onChange={onChangeDesktopNotification}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Pushover User</Form.Label>
+        <Form.Control
+          type="text"
+          value={settings.pushover_user}
+          onChange={onChangePushoverUser}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Pushover App</Form.Label>
+        <Form.Control
+          type="text"
+          value={settings.pushover_app}
+          onChange={onChangePushoverApp}
         />
       </Form.Group>
     </Tab.Pane>

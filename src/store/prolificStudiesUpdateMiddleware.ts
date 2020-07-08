@@ -9,6 +9,9 @@ import { PROLIFIC_STUDIES_UPDATE } from './prolific/types';
 
 const seen: ProlificStudy['id'][] = [];
 
+const https = require('https');
+const querystring = require('querystring');
+
 export const prolificStudiesUpdateMiddleware: Middleware = (store) => (next) => (action) => {
   const result = next(action);
 
@@ -42,6 +45,25 @@ export const prolificStudiesUpdateMiddleware: Middleware = (store) => (next) => 
             ],
           });
         }
+
+        const postData = querystring.stringify({
+          token: store.getState().settings.pushover_app,
+          user: store.getState().settings.pushover_user,
+          message: study.name + ' => ' + `${centsToGBP(study.reward)} | Avg. ${centsToGBP(study.average_reward_per_hour)}`,
+        });
+      
+        var post_options = {
+          host: 'api.pushover.net',
+          path: '/1/messages.json',
+          method: 'POST'
+      };
+      
+        const req = https.request(post_options, (res: { statusCode: any; headers: any; on: (arg0: string, arg1: (d: any) => void) => void; }) => {
+          console.log('pushover statusCode:', res.statusCode);
+        });
+        
+        req.write(postData);
+        req.end();
 
         return [...acc, study];
       }
